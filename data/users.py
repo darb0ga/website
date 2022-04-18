@@ -17,6 +17,7 @@ class User(SqlAlchemyBase, UserMixin):
     phone = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
                               index=True, unique=True, nullable=True)
+    about_me = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     jobs = orm.relation("subject", back_populates='user')
 
