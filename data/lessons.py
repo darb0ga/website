@@ -17,4 +17,4 @@ class Lesson(SqlAlchemyBase):
     subject_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("subjects.id"))
     user = orm.relation('User')
-    subject = orm.relation('subject')
+    subject = orm.relation('Subject')
