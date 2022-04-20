@@ -13,8 +13,5 @@ class Subject(SqlAlchemyBase):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_hard = sqlalchemy.Column(sqlalchemy.Boolean, default=True)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id"))
-    lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("lessons.id"))
+                                sqlalchemy.ForeignKey("users.id")
     user = orm.relation('User')
-    lesson = orm.relation('Lesson')
