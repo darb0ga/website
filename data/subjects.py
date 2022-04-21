@@ -13,5 +13,5 @@ class Subject(SqlAlchemyBase):
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     is_hard = sqlalchemy.Column(sqlalchemy.Boolean, default=False)
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id")
+                                sqlalchemy.ForeignKey("users.id"))
     user = orm.relation('User')
