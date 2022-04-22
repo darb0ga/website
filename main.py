@@ -1,18 +1,12 @@
-import datetime
-from os import abort
-
 from flask import Flask, render_template, make_response, request, session
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
 from werkzeug.utils import redirect
-from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-
-from data.lessons import Lesson
 from data.subjects import Subject
 from data.users import User
 from data import db_session
-from forms.jobs import JobsForm
 from forms.user import RegisterForm
 
 
@@ -25,7 +19,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 def main():
     db_session.global_init("db/trial.db")
     db_sess = db_session.create_session()
-    user = db_sess.query(User).filter(User.id == 1).first()
+    user = db_sess.query(User).filter(User.id == 1)
 
     app.run()
 
@@ -42,6 +36,7 @@ def login():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
+        db_sess.commit()
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
@@ -56,10 +51,10 @@ def index():
     db_sess = db_session.create_session()
     if current_user.is_authenticated:
         subjects0 = db_sess.query(Subject).filter(
-            (Subject.user == current_user) | (Subject.is_private != True))
+            (Subject.user == current_user))
     else:
-        subjects0 = db_sess.query(Subject).filter(Subject.is_private != True)
-    return render_template("index2.html", news=subjects0)
+        subjects0 = db_sess.query(Subject)
+    return render_template("index.html", news=subjects0)
 
 
 @app.route('/logout')
@@ -103,3 +98,4 @@ class LoginForm(FlaskForm):
 
 if __name__ == '__main__':
     main()
+    app.run(port=8080, host='127.0.0.1')
