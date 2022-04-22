@@ -59,7 +59,7 @@ def index():
             (Subject.user == current_user) | (Subject.is_private != True))
     else:
         subjects0 = db_sess.query(Subject).filter(Subject.is_private != True)
-    return render_template("index.html", news=subjects0)
+    return render_template("index2.html", news=subjects0)
 
 
 @app.route('/logout')
