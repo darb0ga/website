@@ -19,12 +19,13 @@ class User(SqlAlchemyBase, UserMixin):
                               index=True, unique=True, nullable=True)
     about_me = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("users.id"))
-    subject_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("subjects.id"))
-    lesson = orm.relation('User')
-    subject = orm.relation('Subject')
+    # lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
+    #                             sqlalchemy.ForeignKey("users.id"))
+    # subject_id = sqlalchemy.Column(sqlalchemy.Integer,
+    #                             sqlalchemy.ForeignKey("users.id"))
+    lesson = orm.relation('Lesson', back_populates='user')
+    subject = orm.relation('Subject', back_populates='user')
+
 
     def __repr__(self):
         return f'Person: {self.role} {self.surname} {self.name}'
