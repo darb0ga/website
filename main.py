@@ -7,7 +7,7 @@ from wtforms.validators import DataRequired
 from data.subjects import Subject
 from data.users import User
 from data import db_session
-from forms.user import RegisterForm
+from forms.user import RegisterForm, LoginForm
 
 
 app = Flask(__name__)
@@ -50,11 +50,10 @@ def login():
 def index():
     db_sess = db_session.create_session()
     if current_user.is_authenticated:
-        subjects0 = db_sess.query(Subject).filter(
-            (Subject.user == current_user))
+        subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).first()
     else:
-        subjects0 = db_sess.query(Subject)
-    return render_template("index.html", news=subjects0)
+        subjects = db_sess.query(Subject)
+    return render_template("index.html", news=subjects)
 
 
 @app.route('/logout')
@@ -79,8 +78,8 @@ def reqister():
                                    message="Такой пользователь уже есть")
         user = User(
             name=form.name.data,
-            email=form.email.data,
-            about=form.about.data
+            role=form.email.data,
+            surname=form.about.data
         )
         user.set_password(form.password.data)
         db_sess.add(user)
@@ -88,12 +87,6 @@ def reqister():
         return redirect('/login')
     return render_template('register.html', title='Регистрация', form=form)
 
-
-class LoginForm(FlaskForm):
-    email = EmailField('Почта', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    remember_me = BooleanField('Запомнить меня')
-    submit = SubmitField('Войти')
 
 
 if __name__ == '__main__':
