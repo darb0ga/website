@@ -100,8 +100,8 @@ def reqister():
     return render_template('register.html', title='Регистрация', form=form)
 
 
-@app.route('/subjects')
-def subjects():
+@app.route('/subject')
+def subject():
     return render_template('subjects.html')
 
 
