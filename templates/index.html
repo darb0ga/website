@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Записи в блоге</h1>
 {% if current_user.is_authenticated %}
-    <a href="subject" class="btn btn-secondary">Добавить новость</a>
+    <a href="subjects" class="btn btn-secondary">Выбрать предмет</a>
 {% endif %}
 {% for item in subjects%}
 {% if current_user.is_authenticated and current_user == item.user_id %}
