@@ -16,7 +16,7 @@ class User(SqlAlchemyBase, UserMixin):
     age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
     phone = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     email = sqlalchemy.Column(sqlalchemy.String,
-                              index=True, unique=True, nullable=True)
+                              index=True, unique=True, nullable=False)
     about_me = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     # lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
