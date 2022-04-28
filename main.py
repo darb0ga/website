@@ -100,6 +100,12 @@ def reqister():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+@app.route('/subjects')
+def subjects():
+    return render_template('subjects.html')
+
+
+
 if __name__ == '__main__':
     main()
     app.run(port=8080, host='127.0.0.1')
