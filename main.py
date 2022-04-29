@@ -50,10 +50,10 @@ def login():
 def index():
     db_sess = db_session.create_session()
     if current_user.is_authenticated:
-        subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).first()
+        subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
     else:
         subjects = db_sess.query(Subject)
-    return render_template("index.html", news=subjects)
+    return render_template("index2.html", subject=subjects)
 
 
 @app.route('/logout')
@@ -109,6 +109,7 @@ def subject():
 def about_us():
     return render_template('about_us.html')
 
+
 if __name__ == '__main__':
     main()
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=5080, host='127.0.0.1')
