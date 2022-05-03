@@ -49,10 +49,7 @@ def login():
 @app.route("/")
 def index():
     db_sess = db_session.create_session()
-    if current_user.is_authenticated:
-        subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
-    else:
-        subjects = db_sess.query(Subject)
+    subjects = db_sess.query(Subject)
     return render_template("index2.html", subject=subjects)
 
 
@@ -109,7 +106,24 @@ def subject():
 def about_us():
     return render_template('about_us.html')
 
+#в будущем это будет обработка входа на определенный предмет(человек открывает английский,
+# у него появляется страница с выбором конкретного занятия)
+# 123.html открывает список карточек с такими занятиями(в каждой карточке указан класс, время, about, учитель )
+@app.route('/lesson/vgbh')
+@login_required
+def info(les_id):
+    db_sess = db_session.create_session()
+    lessons = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
+    return render_template('123.html', lesson=lessons)
+
 
 if __name__ == '__main__':
     main()
     app.run(port=5080, host='127.0.0.1')
+
+
+
+
+#if current_user.is_authenticated:
+#subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
+
