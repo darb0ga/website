@@ -126,6 +126,11 @@ def teacher():
     return render_template("teacher1.html", lesson=lessons)
 
 
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
+
 @app.route('/subject')
 def subject():
     return render_template('subjects.html')
