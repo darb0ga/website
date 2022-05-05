@@ -131,7 +131,7 @@ def feedback():
     return render_template('feedback.html')
 
 
-@app.route('/subject')
+@app.route('/subjects')
 def subject():
     return render_template('subjects.html')
 
