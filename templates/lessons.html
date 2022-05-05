@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <h1>Наши учителя:</h1>
+</head>
+<body>
+<table>
+    {% for row in rows %}
+    <tr>
+        <td>row.surname</td> <td>row.name</td>
+        <td>row.age</td>
+        <td>row.phone</td>
+        <td>row.email</td>
+        <td>row.about_me</td>
+    </tr>
+</table>
+</body>
+{% endblock %}

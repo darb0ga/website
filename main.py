@@ -1,3 +1,6 @@
+import sqlite3
+
+import requests as requests
 from flask import Flask, render_template, make_response, request, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
@@ -9,6 +12,8 @@ from data.users import User
 from data.lessons import Lesson
 from data import db_session
 from forms.user import RegisterForm, LoginForm, LessonForm
+from PIL import Image
+from io import BytesIO
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -134,6 +139,32 @@ def feedback():
 @app.route('/subjects')
 def subject():
     return render_template('subjects.html')
+
+
+@app.route('/maps')
+def maps():
+    api_server = "http://static-maps.yandex.ru/1.x/"
+
+    lon = "37.530887"
+    lat = "55.703118"
+    delta = "0.002"
+
+    params = {
+        "ll": ",".join([lon, lat]),
+        "spn": ",".join([delta, delta]),
+        "l": "map"
+    }
+    response = requests.get(api_server, params=params)
+    Image.open(BytesIO(
+        response.content)).show()
+
+
+@app.route('/teachers')
+def teachers():
+    connect = sqlite3.connect('trial.db')
+    cursor = connect.cursor()
+    rows = cursor.execute('''SELECT * FROM users WHERE role = 'Учитель' ''').fetchall()
+    return render_template('teachers.html', rows=rows)
 
 
 @app.route('/about_us')
