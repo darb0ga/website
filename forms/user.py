@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import PasswordField, StringField, TextAreaField, SubmitField, BooleanField, EmailField, IntegerField, RadioField
+from wtforms import PasswordField, StringField, TextAreaField, SubmitField, BooleanField, EmailField, IntegerField, \
+    RadioField
 from wtforms.validators import DataRequired
 
 
@@ -21,3 +22,11 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+
+class LessonForm(FlaskForm):
+    name = StringField('Название урока', validators=[DataRequired()])
+    time = StringField('Время проведения(в формате 00:00)', validators=[DataRequired()])
+    place = StringField('Место проведения(для онлайн занятий: ссылка)', validators=[DataRequired()])
+    about = TextAreaField("Описание урока")
+    submit = SubmitField('Сохранить')
