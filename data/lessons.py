@@ -12,9 +12,6 @@ class Lesson(SqlAlchemyBase):
     time = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     place = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     about = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    user_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                   sqlalchemy.ForeignKey("users.id"))
     subject_id = sqlalchemy.Column(sqlalchemy.Integer,
-                                sqlalchemy.ForeignKey("subject.id"))
-    user = orm.relation('User')
+                                   sqlalchemy.ForeignKey("subject.id"))
     subject = orm.relation('Subject')

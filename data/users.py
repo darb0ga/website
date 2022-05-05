@@ -23,9 +23,6 @@ class User(SqlAlchemyBase, UserMixin):
     #                           sqlalchemy.ForeignKey("users.id"))
     # subject_id = sqlalchemy.Column(sqlalchemy.Integer,
     #                             sqlalchemy.ForeignKey("users.id"))
-    lesson = orm.relation('Lesson', back_populates='user')
-    subject = orm.relation('Subject', back_populates='user')
-
 
     def __repr__(self):
         return f'Person: {self.role} {self.surname} {self.name}'
