@@ -19,8 +19,8 @@ class User(SqlAlchemyBase, UserMixin):
                               index=True, unique=True, nullable=False)
     about_me = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    # lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
-    #                             sqlalchemy.ForeignKey("users.id"))
+    lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
+                               sqlalchemy.ForeignKey("users.id"))
     # subject_id = sqlalchemy.Column(sqlalchemy.Integer,
     #                             sqlalchemy.ForeignKey("users.id"))
     lesson = orm.relation('Lesson', back_populates='user')
