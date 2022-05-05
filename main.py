@@ -106,9 +106,15 @@ def subject():
 def about_us():
     return render_template('about_us.html')
 
+
+@app.route('/feedback')
+def feedback():
+    return render_template('feedback.html')
+
 #в будущем это будет обработка входа на определенный предмет(человек открывает английский,
 # у него появляется страница с выбором конкретного занятия)
 # 123.html открывает список карточек с такими занятиями(в каждой карточке указан класс, время, about, учитель )
+
 @app.route('/lesson/vgbh')
 @login_required
 def info(les_id):
