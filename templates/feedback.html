@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <meta charset="utf-8">
+    <h1>О нас:</h1>
+</head>
+<body>
+<h4>Оставье отзыв о нашем приложении. Мы обязательно прочтем его.</h4>
+<p>
+    {{ form.about.label }}<br>
+    {{ form.about(class="form-control") }}<br>
+    {% for error in form.about.errors %}
+        <p class="alert alert-danger" role="alert">
+    {{ error }}
+    </p>
+{% endfor %}
+</p>
+</body>
+{% endblock %}
