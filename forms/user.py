@@ -1,37 +1,32 @@
-import sqlalchemy
-from .db_session import SqlAlchemyBase
-from sqlalchemy import orm
-from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import UserMixin
+from flask_wtf import FlaskForm
+from wtforms import PasswordField, StringField, TextAreaField, SubmitField, BooleanField, EmailField, IntegerField, \
+    RadioField
+from wtforms.validators import DataRequired
 
 
-class User(SqlAlchemyBase, UserMixin):
-    __tablename__ = 'users'
-
-    id = sqlalchemy.Column(sqlalchemy.Integer,
-                           primary_key=True, autoincrement=True)
-    role = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    surname = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    name = sqlalchemy.Column(sqlalchemy.String, nullable=False)
-    age = sqlalchemy.Column(sqlalchemy.Integer, nullable=True)
-    phone = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    email = sqlalchemy.Column(sqlalchemy.String,
-                              index=True, unique=True, nullable=False)
-    about_me = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    hashed_password = sqlalchemy.Column(sqlalchemy.String, nullable=True)
-    # lesson_id = sqlalchemy.Column(sqlalchemy.Integer,
-    #                             sqlalchemy.ForeignKey("users.id"))
-    # subject_id = sqlalchemy.Column(sqlalchemy.Integer,
-    #                             sqlalchemy.ForeignKey("users.id"))
-    lesson = orm.relation('Lesson', back_populates='user')
-    subject = orm.relation('Subject', back_populates='user')
+class RegisterForm(FlaskForm):
+    email = EmailField('Почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    password_again = PasswordField('Повторите пароль', validators=[DataRequired()])
+    name = StringField('Имя пользователя', validators=[DataRequired()])
+    surname = StringField('Фамилия пользователя', validators=[DataRequired()])
+    about = TextAreaField("Немного о себе")
+    role = RadioField('Введите вашу роль на сайте', choices=['Учитель', 'Ученик'])
+    age = IntegerField('Возраст', validators=[DataRequired()])
+    phone = IntegerField('Номер телефона(начиная со 2 числа, к примеру, 9172714253)', validators=[DataRequired()])
+    submit = SubmitField('Войти')
 
 
-    def __repr__(self):
-        return f'Person: {self.role} {self.surname} {self.name}'
+class LoginForm(FlaskForm):
+    email = EmailField('Почта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    remember_me = BooleanField('Запомнить меня')
+    submit = SubmitField('Войти')
 
-    def set_password(self, password):
-        self.hashed_password = generate_password_hash(password)
 
-    def check_password(self, password):
-        return check_password_hash(self.hashed_password, password)
+class LessonForm(FlaskForm):
+    name = StringField('Название урока', validators=[DataRequired()])
+    time = StringField('Время проведения(в формате 00:00)', validators=[DataRequired()])
+    place = StringField('Место проведения(для онлайн занятий: ссылка)', validators=[DataRequired()])
+    about = TextAreaField("Описание урока")
+    submit = SubmitField('Сохранить')
