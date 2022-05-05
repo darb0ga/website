@@ -6,9 +6,9 @@ from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
 from data.subjects import Subject
 from data.users import User
+from data.lessons import Lesson
 from data import db_session
-from forms.user import RegisterForm, LoginForm
-
+from forms.user import RegisterForm, LoginForm, LessonForm
 
 app = Flask(__name__)
 login_manager = LoginManager()
@@ -37,9 +37,12 @@ def login():
         db_sess = db_session.create_session()
         user = db_sess.query(User).filter(User.email == form.email.data).first()
         db_sess.commit()
-        if user and user.check_password(form.password.data):
+        if user and user.check_password(form.password.data) and user.role == 'Ученик':
             login_user(user, remember=form.remember_me.data)
             return redirect("/")
+        elif user and user.check_password(form.password.data) and user.role == 'Учитель':
+            login_user(user, remember=form.remember_me.data)
+            return redirect("/teacher")
         return render_template('login.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -97,6 +100,32 @@ def reqister():
     return render_template('register.html', title='Регистрация', form=form)
 
 
+@app.route("/form_lesson")
+@login_required
+def form_lesson():
+    form = LessonForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        lesson = Lesson(
+            name=form.name.data,
+            time=form.time.data,
+            place=form.place.data,
+            about=form.about.data
+        )
+        db_sess.add(lesson)
+        db_sess.commit()
+        return redirect('/teacher')
+    return render_template("form_lesson.html", title='Регистрация', form=form)
+
+
+@app.route("/teacher")
+@login_required
+def teacher():
+    db_sess = db_session.create_session()
+    lessons = db_sess.query(Lesson).filter(Lesson.teacher_id == current_user.id).all()
+    return render_template("teacher1.html", lesson=lessons)
+
+
 @app.route('/subject')
 def subject():
     return render_template('subjects.html')
@@ -107,19 +136,14 @@ def about_us():
     return render_template('about_us.html')
 
 
-@app.route('/feedback')
-def feedback():
-    return render_template('feedback.html')
-
-#в будущем это будет обработка входа на определенный предмет(человек открывает английский,
+# в будущем это будет обработка входа на определенный предмет(человек открывает английский,
 # у него появляется страница с выбором конкретного занятия)
 # 123.html открывает список карточек с такими занятиями(в каждой карточке указан класс, время, about, учитель )
-
-@app.route('/lesson/vgbh')
+@app.route('/lesson/<int:les_id>')
 @login_required
 def info(les_id):
     db_sess = db_session.create_session()
-    lessons = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
+    lessons = db_sess.query(Subject).filter(Lesson.subject_id == les_id).all()
     return render_template('123.html', lesson=lessons)
 
 
@@ -127,9 +151,6 @@ if __name__ == '__main__':
     main()
     app.run(port=5080, host='127.0.0.1')
 
-
-
-
-#if current_user.is_authenticated:
-#subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
+# if current_user.is_authenticated:
+# subjects = db_sess.query(Subject).filter(Subject.user_id == current_user.id).all()
 
