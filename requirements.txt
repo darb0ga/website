@@ -1,3 +1,6 @@
 Werkzeug~=2.1.2
 WTForms~=3.0.1
 Flask~=2.1.2
+SQLAlchemy~=1.4.36
+Flask_Login~=0.6.1
+Flask_WTF~=1.0.1
