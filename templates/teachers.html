@@ -5,15 +5,26 @@
     <h1>Наши учителя:</h1>
 </head>
 <body>
-<table>
-    {% for row in rows %}
-    <tr>
-        <td>row.surname</td> <td>row.name</td>
-        <td>row.age</td>
-        <td>row.phone</td>
-        <td>row.email</td>
-        <td>row.about_me</td>
-    </tr>
-</table>
+<div class="col">
+    <div class="card mb-4 rounded-3 shadow-sm">
+        <div class="card-header py-3">
+            <h4 class="my-0 fw-normal">Наши благодарности!</h4>
+        </div>
+        {% for item in rows %}
+        <div class="card-body">
+            <ul class="list-unstyled mt-3 mb-4">
+                <div class="alert alert-primary" role="alert">
+                    {{item["surname"]}}
+                </div>
+                <div class="alert alert-primary" role="alert">
+                    {{item["name"]}}
+                </div>
+                <div class="alert alert-dark" role="alert">
+                    {{item["about_me"]}}
+                </div>
+            </ul>
+        </div>
+        {% endfor %}
 </body>
+<a class="btn btn-primary" href="/" role="button">Назад</a>
 {% endblock %}
