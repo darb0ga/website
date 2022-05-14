@@ -157,14 +157,14 @@ def maps():
     response = requests.get(api_server, params=params)
     Image.open(BytesIO(
         response.content)).show()
+    return redirect('/')
 
 
 @app.route('/teachers')
 def teachers():
-    connect = sqlite3.connect('trial.db')
-    cursor = connect.cursor()
-    rows = cursor.execute('''SELECT * FROM users WHERE role = 'Учитель' ''').fetchall()
-    return render_template('teachers.html', rows=rows)
+    db_sess = db_session.create_session()
+    teach = db_sess.query(User).filter(User.role == 'Учитель').all()
+    return render_template('teachers.html', rows=teach)
 
 
 @app.route('/about_us')
