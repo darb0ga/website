@@ -5,26 +5,28 @@
     <h1>Наши учителя:</h1>
 </head>
 <body>
-<div class="col">
+<div class="container">
     <div class="card mb-4 rounded-3 shadow-sm">
         <div class="card-header py-3">
             <h4 class="my-0 fw-normal">Наши благодарности!</h4>
         </div>
-        {% for item in rows %}
-        <div class="card-body">
-            <ul class="list-unstyled mt-3 mb-4">
-                <div class="alert alert-primary" role="alert">
-                    {{item["surname"]}}
-                </div>
-                <div class="alert alert-primary" role="alert">
-                    {{item["name"]}}
-                </div>
-                <div class="alert alert-dark" role="alert">
-                    {{item["about_me"]}}
-                </div>
-            </ul>
-        </div>
-        {% endfor %}
+        <table class="table-info">
+            <thead>
+                <tr>
+                <th scope="col">Фамилия</th>
+                <th scope="col">Имя</th>
+                <th scope="col">Об учителе</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in rows %}
+                <tr>
+                    <td>{{item["surname"]}}</td>
+                    <td>{{item["name"]}}</td>
+                    <td>{{item["about_me"]}}</td>
+                </tr>
+                {% endfor %}
+        </table>
 </body>
 <a class="btn btn-primary" href="/" role="button">Назад</a>
 {% endblock %}
