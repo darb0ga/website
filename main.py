@@ -200,10 +200,36 @@ def info(les_id):
     lessons = db_sess.query(Subject).filter(Lesson.subject_id == les_id).all()
     return render_template('123.html', lesson=lessons)
 
-@app.route('/redacter/<int:les_id>')
+@app.route("/redacter/<int:id>", methods=['GET', 'POST'])
 @login_required
-def redacter(les_id):
-    return render_template('redacter.html')
+def redacter(id):
+    form = RegisterForm()
+    if request.method == "GET":
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.id == id)
+        if user:
+            form.phone.data = user.phone
+            form.email.data = user.email
+            form.about.data = user.about_me
+            db_sess.commit()
+            return redirect('/profile')
+        else:
+            abort(404)
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(User).filter(User.id == id)
+        if user:
+            user.phone = form.phone.data
+            user.email = form.email.data
+            user.about_me = form.about.data
+            db_sess.commit()
+            return redirect('/')
+        else:
+            abort(404)
+    return render_template('redacter.html',
+                           title='Редактирование профиля',
+                           form=form
+                           )
 
 if __name__ == '__main__':
     main()
