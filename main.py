@@ -1,11 +1,13 @@
 import sqlite3
-
-# import requests as requests
 import folium as folium
 from flask import Flask, render_template, make_response, request, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from geopy import Nominatim
+#from geopy import Nominatim
+import requests as requests
+from flask import Flask, render_template, make_response, request, session
+from flask_login import LoginManager, login_user, current_user, logout_user, login_required
+from flask_wtf import FlaskForm
 from werkzeug.utils import redirect
 from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
@@ -68,6 +70,12 @@ def index():
 def logout():
     logout_user()
     return redirect("/")
+
+
+@app.route('/profile')
+@login_required
+def prof():
+    return render_template("profile.html")
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -145,6 +153,21 @@ def subject():
 
 @app.route('/maps')
 def maps():
+    api_server = "http://static-maps.yandex.ru/1.x/"
+
+    lon = "37.530887"
+    lat = "55.703118"
+    delta = "0.002"
+
+    params = {
+        "ll": ",".join([lon, lat]),
+        "spn": ",".join([delta, delta]),
+        "l": "map"
+    }
+    response = requests.get(api_server, params=params)
+    Image.open(BytesIO(
+        response.content)).show()
+    return redirect('/')
     map = folium.Map(location=[56.11677, 47.26278],
                      zoom_start=4
                      )
@@ -177,6 +200,10 @@ def info(les_id):
     lessons = db_sess.query(Subject).filter(Lesson.subject_id == les_id).all()
     return render_template('123.html', lesson=lessons)
 
+@app.route('/redacter/<int:les_id>')
+@login_required
+def redacter(les_id):
+    return render_template('redacter.html')
 
 if __name__ == '__main__':
     main()
