@@ -1,9 +1,11 @@
 import sqlite3
 
-import requests as requests
+# import requests as requests
+import folium as folium
 from flask import Flask, render_template, make_response, request, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
+from geopy import Nominatim
 from werkzeug.utils import redirect
 from wtforms import EmailField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
@@ -143,21 +145,14 @@ def subject():
 
 @app.route('/maps')
 def maps():
-    api_server = "http://static-maps.yandex.ru/1.x/"
-
-    lon = "37.530887"
-    lat = "55.703118"
-    delta = "0.002"
-
-    params = {
-        "ll": ",".join([lon, lat]),
-        "spn": ",".join([delta, delta]),
-        "l": "map"
-    }
-    response = requests.get(api_server, params=params)
-    Image.open(BytesIO(
-        response.content)).show()
-    return redirect('/')
+    map = folium.Map(location=[56.11677, 47.26278],
+                     zoom_start=4
+                     )
+    folium.Marker(location=[56.14677, 47.22278],
+                  tooltip='Чебоксары',
+                  icon=folium.Icon(color='red')
+                  ).add_to(map)
+    return map._repr_html_()
 
 
 @app.route('/teachers')
