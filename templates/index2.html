@@ -26,6 +26,7 @@
           font-size: 3.5rem;
         }
       }
+
     </style>
     <link href="pricing.css" rel="stylesheet">
 
@@ -42,7 +43,7 @@
     <header>
         <div class="d-flex flex-column flex-md-row align-items-center pb-3 mb-4 border-bottom">
             {% if current_user.is_authenticated %}
-            <a href="/logout" class="d-flex align-items-center text-dark text-decoration-none">
+            <a href="/profile" class="d-flex align-items-center text-dark text-decoration-none">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="32" class="me-2" viewBox="0 0 118 94"
                      role="img"><title>Bootstrap</title>
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -53,15 +54,25 @@
             </a>
             {% else %}
             <p>
-                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-                <a class="btn btn-success" href="/login">Войти</a>
+                <a class="btn btn-outline-success" href="/register">Зарегистрироваться</a>
+                <a class="btn btn-outline-primary" href="/login">Войти</a>
             </p>
             {% endif %}
             <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto">
+                {% if current_user.is_authenticated %}
+                <a class="me-3 py-2 text-dark text-decoration-none" href="subjects">Предметы</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="teachers">Учителя</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="#">Занятия</a>
+                <a class="me-3 py-2 text-dark text-decoration-none" href="maps">Карта</a>
+                <a href="/logout">
+                    <button class="btn btn-outline-danger" type="submit">Выход из аккаунта</button>
+                </a>
+                {% else %}
                 <a class="me-3 py-2 text-dark text-decoration-none" href="subjects">Предметы</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="teachers">Учителя</a>
                 <a class="me-3 py-2 text-dark text-decoration-none" href="#">Занятия</a>
                 <a class="py-2 text-dark text-decoration-none" href="maps">Карта</a>
+                {% endif %}
             </nav>
         </div>
 
