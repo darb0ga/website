@@ -29,6 +29,7 @@
 <main>
     <section class="py-5 text-center container">
         <div class="mx-auto">
+            <img class="mb-2" src="/static/img/img2.png" alt="" width="500" height="240">
             <p class="lead text-muted">Здесь вы можете выбрать интересующий вас курс, после этого вам станут
                 доступны расписание, задания</p>
         </div>
@@ -38,27 +39,16 @@
             {% for item in lesson%}
             <div class="card">
                 <div class="card-header">
-                    item
+                    Предмет
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Особое обращение с заголовком</h5>
-                    <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                        дополнительному контенту.</p>
-                    <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
+                    <h5 class="card-title">{{ item.name }}</h5>
+                    <p class="card-text">{{ item.about }}</p>
+                    <a href="#" class="btn btn-primary">Просмотреть преподавателя</a>
+                    <a href="#" class="btn btn-primary">Записаться</a>
                 </div>
             </div>
             {% endfor %}
-            <div class="card">
-                <div class="card-header">
-                    Рекомендуемые
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Особое обращение с заголовком</h5>
-                    <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                        дополнительному контенту.</p>
-                    <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
-                </div>
-            </div>
             <div class="card">
                 <div class="card-header">
                     Рекомендуемые
