@@ -153,9 +153,25 @@ def subject():
 
 @app.route('/maps')
 def maps():
+    api_server = "http://static-maps.yandex.ru/1.x/"
+
+    lon = "37.530887"
+    lat = "55.703118"
+    delta = "0.002"
+
+    params = {
+        "ll": ",".join([lon, lat]),
+        "spn": ",".join([delta, delta]),
+        "l": "map"
+    }
+    response = requests.get(api_server, params=params)
+    Image.open(BytesIO(
+        response.content)).show()
+    return redirect('/')
     map = folium.Map(location=[56.11677, 47.26278],
-                     zoom_start=5)
-    folium.Marker(location=[56.1500, 47.22500],
+                     zoom_start=4
+                     )
+    folium.Marker(location=[56.14677, 47.22278],
                   tooltip='Чебоксары',
                   icon=folium.Icon(color='red')
                   ).add_to(map)
@@ -183,6 +199,7 @@ def info(les_id):
     db_sess = db_session.create_session()
     lessons = db_sess.query(Subject).filter(Lesson.subject_id == les_id).all()
     return render_template('123.html', lesson=lessons)
+
 
 @app.route("/redacter/<int:id>", methods=['GET', 'POST'])
 @login_required
@@ -214,6 +231,7 @@ def redacter(id):
                            title='Редактирование профиля',
                            form=form
                            )
+
 
 if __name__ == '__main__':
     main()
