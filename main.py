@@ -153,25 +153,9 @@ def subject():
 
 @app.route('/maps')
 def maps():
-    api_server = "http://static-maps.yandex.ru/1.x/"
-
-    lon = "37.530887"
-    lat = "55.703118"
-    delta = "0.002"
-
-    params = {
-        "ll": ",".join([lon, lat]),
-        "spn": ",".join([delta, delta]),
-        "l": "map"
-    }
-    response = requests.get(api_server, params=params)
-    Image.open(BytesIO(
-        response.content)).show()
-    return redirect('/')
     map = folium.Map(location=[56.11677, 47.26278],
-                     zoom_start=4
-                     )
-    folium.Marker(location=[56.14677, 47.22278],
+                     zoom_start=5)
+    folium.Marker(location=[56.1500, 47.22500],
                   tooltip='Чебоксары',
                   icon=folium.Icon(color='red')
                   ).add_to(map)
