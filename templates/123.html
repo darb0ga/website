@@ -1,6 +1,4 @@
-{% extends "base.html" %}
-
-{% block content %}
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -46,22 +44,11 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ item.about }}</p>
-                    <a href="#" class="btn btn-primary">Просмотреть преподавателя</a>
-                    <a href="#" class="btn btn-primary">Записаться</a><div>{{ message }}</div>
+                    <a href="ateach/{{item.user_id}}" class="btn btn-primary">Просмотреть преподавателя</a>
+                    <a href="#" class="btn btn-primary">Записаться</a>
                 </div>
             </div>
             {% endfor %}
-            <div class="card">
-                <div class="card-header">
-                    Рекомендуемые
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Особое обращение с заголовком</h5>
-                    <p class="card-text">С вспомогательным текстом ниже в качестве естественного перехода к
-                        дополнительному контенту.</p>
-                    <a href="#" class="btn btn-primary">Перейти куда-нибудь</a>
-                </div>
-            </div>
         </div>
     </div>
 </main>
@@ -78,4 +65,4 @@
 </footer>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-{% endblock %}
+</html>
