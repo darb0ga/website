@@ -53,8 +53,6 @@
             </a>
             {% else %}
             <p>
-                <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-                <a class="btn btn-success" href="/login">Войти</a>
                 <a class="btn btn-outline-success" href="/register">Зарегистрироваться</a>
                 <a class="btn btn-outline-primary" href="/login">Войти</a>
             </p>
@@ -76,7 +74,9 @@
                 {% endif %}
             </nav>
         </div>
-
+        {% if current_user.role == 'Учитель' %}
+        <a class="me-3 py-2 text-dark text-decoration-none" href="#">Добавить предмет</a>
+        {% endif %}
         <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
             <h1 class="display-5 fw-normal">Выбор предмета</h1>
             <p class="fs-5 text-muted">Каждая карточка предмета предоставляет выбор преподавателя и запись в группу
@@ -109,9 +109,9 @@
                             </button>
                         </a>
                         {% else %}
-                        <a href="lesson/info/{{item.id}}">
+                        <a href="/register">
                             <button type="button" class="w-100 btn btn-lg btn-outline-primary">
-                                Подробнее
+                                Зайдите для того, чтобы просмотреть
                             </button>
                         </a>
                         {% endif %}
@@ -133,7 +133,7 @@
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="about_us">Контакты</a></li>
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="usersupport">Поддержка пользователей</a>
                     </li>
-                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="#">Решение проблем</a></li>
+                    <li class="mb-1"><a class="link-secondary text-decoration-none" href="problems">Решение проблем</a></li>
                     <li class="mb-1"><a class="link-secondary text-decoration-none" href="feedback">Отзывы</a></li>
                 </ul>
             </div>
