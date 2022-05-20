@@ -1,6 +1,4 @@
 import sqlite3
-from os import abort
-
 import folium as folium
 from flask import Flask, render_template, make_response, request, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required
@@ -148,11 +146,6 @@ def feedback():
     return render_template('feedback.html')
 
 
-@app.route('/usersupport')
-def usersupport():
-    return render_template('userssupport.html')
-
-
 @app.route('/subjects')
 def subject():
     return render_template('subjects.html')
@@ -173,6 +166,14 @@ def maps():
                   icon=folium.Icon(color='red')
                   ).add_to(map)
     return map._repr_html_()
+
+
+@app.route('/ateach')
+@login_required
+def ateach():
+    db_sess = db_session.create_session()
+    teach = db_sess.query(User).filter(User.role == 'Учитель').all()
+    return render_template('teach.html', rows=teach)
 
 
 @app.route('/teachers')
