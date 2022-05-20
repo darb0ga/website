@@ -1,4 +1,6 @@
 import sqlite3
+from os import abort
+
 import folium as folium
 from flask import Flask, render_template, make_response, request, session
 from flask_login import LoginManager, login_user, current_user, logout_user, login_required

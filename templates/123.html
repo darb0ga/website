@@ -1,4 +1,6 @@
-<!doctype html>
+{% extends "base.html" %}
+
+{% block content %}
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -45,7 +47,7 @@
                     <h5 class="card-title">{{ item.name }}</h5>
                     <p class="card-text">{{ item.about }}</p>
                     <a href="#" class="btn btn-primary">Просмотреть преподавателя</a>
-                    <a href="#" class="btn btn-primary">Записаться</a>
+                    <a href="#" class="btn btn-primary">Записаться</a><div>{{ message }}</div>
                 </div>
             </div>
             {% endfor %}
@@ -76,4 +78,4 @@
 </footer>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-</html>
+{% endblock %}
