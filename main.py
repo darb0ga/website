@@ -146,6 +146,11 @@ def feedback():
     return render_template('feedback.html')
 
 
+@app.route('/usersupport')
+def usersupport():
+    return render_template('userssupport.html')
+
+
 @app.route('/subjects')
 def subject():
     return render_template('subjects.html')
